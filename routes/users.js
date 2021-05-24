@@ -1,0 +1,30 @@
+const router= require("express").Router()
+const verify=require("../middlware/verifyToken")
+const { userRegister,userLogin, userAuth,getAllUser,deleteUser, updateUser, getUserByCourse,checkRole }= require("../utils/auth")
+
+router.post("/registerUser",async(req,res)=>{
+    await userRegister(req.body,res)
+}),
+
+router.post("/loginUser",async(req,res)=>{
+    await userLogin(req.body,res)
+}),
+router.get("/",userAuth,checkRole(["student"]),async (req,res)=>{
+     await getAllUser(req,res)
+    res.send("home")
+    
+}),
+router.get("/:id",async (req,res)=>{
+    await getUserByCourse(req,res)
+}), 
+router.delete("/:id",async (req,res)=>{
+    await deleteUser(req,res)
+}), 
+
+router.put("/:id",async (req,res)=>{
+    await updateUser(req,res)    
+})
+
+
+
+module.exports=router
