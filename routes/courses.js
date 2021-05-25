@@ -15,8 +15,23 @@ router.post("/", async (req, res) => {
     }
 });
 router.get("/", async (req, res) => {
-    newCourse = await Courses.find({});
-    res.send(newCourse);
+    try {
+        newCourse = await Courses.find({});
+        res.send(newCourse);
+    } catch (error) {
+        res.send(error)
+    }
+
+});
+router.get("/:id", async (req, res) => {
+    try {
+        const _id = req.params.id
+        newCourse = await Courses.find(_id);
+        res.send(newCourse);
+    } catch (error) {
+        res.send(error)
+    }
+
 });
 router.delete("/:id", async (req, res) => {
     const _id = req.params.id
@@ -30,7 +45,7 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     const _id = req.params.id
     try {
-        const updatedCourse = await Courses.findByIdAndUpdate({ _id }, { name: req.body.name , code:req.body.code,students:req.body.students})
+        const updatedCourse = await Courses.findByIdAndUpdate({ _id }, { name: req.body.name, code: req.body.code, students: req.body.students })
         res.send(updatedCourse)
     } catch (error) {
         console.log(error)

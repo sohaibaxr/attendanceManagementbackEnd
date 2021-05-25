@@ -32,11 +32,7 @@ const userRegister = async (userDets, res) => {
     });
   }
 };
-const addUser = async (req, res) => {
-  const user = new User()
-  user.email = req.email
-  await User.save()
-}
+
 const getAllUser = async (req, res) => {
   try {
     const users = await User.find({})
@@ -92,6 +88,16 @@ const getUserByCourse = async (req, res) => {
     res.send(error)
   }
 }
+const getBycourseId=async (req,res)=>{
+  try {
+    const course=req.params.courseId
+    const requiredUser = await User.find({ courses: course })
+    console.log(requiredUser)
+    res.send(requiredUser)
+  } catch (error) {
+    res.send(error)
+  }
+} 
 const userLogin = async (userCreds, res) => {
   let { email, password } = userCreds;
   const user = await User.findOne({ email });
@@ -129,18 +135,6 @@ const userLogin = async (userCreds, res) => {
 const userAuth = passport.authenticate("jwt", { session: false });
 
 
-// const authRole = (permission) => {
-//   return (req, res, next) => {
-//     const userRole = req.user.role
-//     if (permission.includes(userRole)) {
-//       next()
-//     }
-//     else {
-//       return res.status(401).json("not allowed")
-//     }
-//   }
-// }
-
 const checkRole = roles => {return (req, res, next) => {
   if (roles.includes(req.user.role)) {
     return next()
@@ -162,6 +156,7 @@ const validateEmail = async email => {
 module.exports = {
   userAuth,
   userLogin,
+  getBycourseId,
   userRegister,
   getAllUser,
   deleteUser,
