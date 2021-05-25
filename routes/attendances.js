@@ -5,7 +5,7 @@ const moment = require("moment")
 
 router.post("/", async (req, res) => {
     try {
-        const newAttendance = new Attendance();
+        const newAttendance = new Attendance()
         newAttendance.student = req.body.student,
         newAttendance.course = req.body.course,
         newAttendance.date = req.body.date,
