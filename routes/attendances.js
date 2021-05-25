@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Attendance = require("../model/Attendance")
-const mongoose = require ("mongoose")
+const mongoose = require("mongoose")
+const moment = require("moment")
 
 router.post("/", async (req, res) => {
     try {
@@ -9,8 +10,13 @@ router.post("/", async (req, res) => {
         newAttendance.course = req.body.course,
         newAttendance.date = req.body.date,
         newAttendance.isPresent = req.body.isPresent
-        await newAttendance.save()
-        res.send(newAttendance)
+        const filter = { student: req.body.student, course: req.body.course, date: moment(req.body.date).format("YYYY-MM-DD") }
+        const update = { isPresent: req.body.isPresent }
+        const count = await Attendance.countDocuments(filter)
+        if (count === 1) {
+            const doc = await Attendance.findOneAndUpdate(filter, update, { new: true, upsert: true })
+            res.send(doc)
+        }
     } catch (error) {
         res.send(error)
     }

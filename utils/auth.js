@@ -102,8 +102,8 @@ const userLogin = async (userCreds, res) => {
   let { email, password } = userCreds;
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).json({
-      message: "Invalid login credentials.",
+    return res.status(201).json({
+      message: "Invalid email.",
       success: false
     });
   }
@@ -126,7 +126,7 @@ const userLogin = async (userCreds, res) => {
       token: `Bearer ${token}`,
       expiresIn: 168
     };
-    return res.status(201).json({ ...result, message: "You are now logged in." });
+    return res.status(200).json({ ...result, message: "You are now logged in." });
   } else {
     return res.json({ message: "Incorrect password.", success: false });
   }

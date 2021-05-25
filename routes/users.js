@@ -13,7 +13,7 @@ router.post("/loginUser",async(req,res)=>{
 router.get("/",async (req,res)=>{
      await getAllUser(req,res)   
 }),
-router.get("/:id",async (req,res)=>{
+router.get("/attendance/:id",async (req,res)=>{
     await getUserByCourse(req,res)
 }), 
 router.delete("/:id",async (req,res)=>{

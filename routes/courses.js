@@ -22,14 +22,25 @@ router.get("/", async (req, res) => {
         res.send(error)
     }
 });
+// get courses by course id
 router.get("/:id", async (req, res) => {
     try {
         const _id = req.params.id
-        newCourse = await Courses.find(_id);
+        newCourse = await Courses.find({_id});
         res.send(newCourse);
     } catch (error) {
         res.send(error)
     }
+});
+// get student assigned courses 
+router.get("/students/:studentId", async (req, res) => {
+     try {
+         const _id = req.params.studentId
+         const requiredStudents = await Courses.find({students:_id});
+         res.send(requiredStudents);
+     } catch (error) {
+         res.send(error)
+     }
 });
 router.delete("/:id", async (req, res) => {
     const _id = req.params.id
