@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
     } catch (error) {
         res.send(error)
     }
-
 });
 router.get("/:id", async (req, res) => {
     try {
@@ -31,7 +30,6 @@ router.get("/:id", async (req, res) => {
     } catch (error) {
         res.send(error)
     }
-
 });
 router.delete("/:id", async (req, res) => {
     const _id = req.params.id
