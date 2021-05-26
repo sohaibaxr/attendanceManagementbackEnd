@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:courseId&:studentId", async (req, res) => {
+router.get("/studentcourse/:courseId&:studentId", async (req, res) => {
     try {
         const courseId = req.params.courseId
         const studentId = req.params.studentId
